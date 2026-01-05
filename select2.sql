@@ -1,10 +1,10 @@
 SELECT ename,
-sal "ÀÎ»óÀü ±Þ¿©"
-,sal + comm "ÃÑ±Þ¿©"
-,(sal + comm)* 1.1 as "ÀÎ»óµÈ ±Þ¿©(±Þ¿© + º¸³Ê½º)"
+sal "ì¸ìƒì „ ê¸‰ì—¬"
+,sal + comm "ì „ì²´ê¸‰ì—¬"
+,(sal + comm)* 1.1 as "ì¸ìƒ í›„ ê¸‰ì—¬(ê¸‰ì—¬ + ë³´ë„ˆìŠ¤)"
 FROM emp
 WHERE sal < 3000
-AND job = 'SALESMAN' --Á¶°ÇÀý(where)ÀÛ¼º
+AND job = 'SALESMAN' --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(where)ï¿½Û¼ï¿½
 ORDER BY ename desc; 
 
 SELECT *
@@ -12,12 +12,12 @@ FROM emp
 WHERE sal > 2000
 OR job = 'SALESMAN';
 
---81³âµµ¿¡ ÀÔ»çÇÑ »ç¿øÁ¤º¸
+--81ï¿½âµµï¿½ï¿½ ï¿½Ô»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 SELECT *
 FROM emp
 WHERE hiredate between '81/01/01' AND '81/12/31'
 ORDER BY hiredate;
---2000¿¡¼­ 3000»çÀÌÀÇ °ªÀ» ±¸ÇÏ´Â ¹æ¹ý
+--2000ï¿½ï¿½ï¿½ï¿½ 3000ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
 --WHERE sal between 2000 AND 3000;
 --WHERE sal <= 3000
 --AND sal > 2000;
@@ -25,7 +25,7 @@ ORDER BY hiredate;
 --in(A,B,C)
 SELECT *
 FROM emp
-WHERE deptno in(10, 20)  --deptno >=10 AND deptno <=20; ÀÌ°Å¶û ±¸ºÐÇØ¾ßÇÑ´Ù
+WHERE deptno in(10, 20)  --deptno >=10 AND deptno <=20; ï¿½Ì°Å¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½Ñ´ï¿½
 AND ename not in ('SMITH','FORD');
 
 -- is null/ is not null
@@ -36,14 +36,14 @@ WHERE comm is not null; --''
 -- like ( = )
 SELECT *
 FROM emp
-WHERE ename like '_LA%';  -- % => *(¾ø°Å³ª ÇÑ±ÛÀÚ ÀÌ»ó)
-                          -- _ => ÇÑ±ÛÀÚ(¿¡ ´ëÀÀ)
+WHERE ename like '_LA%';  -- % => *(ï¿½ï¿½ï¿½Å³ï¿½ ï¿½Ñ±ï¿½ï¿½ï¿½ ï¿½Ì»ï¿½)
+                          -- _ => ï¿½Ñ±ï¿½ï¿½ï¿½(ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
 SELECT *
 FROM professor
 WHERE deptno in(101, 103)
 AND position like '%full%';
---AND position = 'a full professor'; -- Primary Key (Áßº¹ X)
+--AND position = 'a full professor'; -- Primary Key (ï¿½ßºï¿½ X)
 
 SELECT *
 FROM professor
@@ -61,16 +61,16 @@ WHERE pay + nvl(bonus, 0) >= 300;
 SELECT *
 FROM department;
 
---±³¼ö, ÇÐ»ý => ±³¼ö(ÇÐ»ý)¹øÈ£/ ÀÌ¸§/ ÇÐ°úÁ¤º¸.
+--ï¿½ï¿½ï¿½ï¿½, ï¿½Ð»ï¿½ => ï¿½ï¿½ï¿½ï¿½(ï¿½Ð»ï¿½)ï¿½ï¿½È£/ ï¿½Ì¸ï¿½/ ï¿½Ð°ï¿½ï¿½ï¿½ï¿½ï¿½.
 SELECT profno, name, deptno
 FROM professor
-UNION ALL --Áßº¹µÈ °ªÀÌ ÀÖ¾îµµ Ãâ·Â; UNION -- Áßº¹µÈ °ªÀº Á¦°ÅÇÏ°í Ãâ·Â
+UNION ALL --ï¿½ßºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾îµµ ï¿½ï¿½ï¿½; UNION -- ï¿½ßºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½
 SELECT studno, name, deptno1
 FROM student;
 
--- UNION ALL (Áßº¹µÈ °ªµµ Ãâ·ÂÇØÁÜ)
--- UNION (Áßº¹µÈ °ªÀ» Á¦¿ÜÇÏ°í Ãâ·ÂÇØÁÜ)
--- INTERSECT(Áßº¹µÈ °ª¸¸ Ãâ·ÂÇØÁÜ)
+-- UNION ALL (ï¿½ßºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+-- UNION (ï¿½ßºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+-- INTERSECT(ï¿½ßºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 SELECT studno, name
 FROM student
 WHERE deptno1 = 101
