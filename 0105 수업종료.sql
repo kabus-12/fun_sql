@@ -4,14 +4,14 @@ SELECT name,tel
 '051','BUSAN',
 '052','ULSAN',
 '055','GYEONGNAM','ETC') as "LOC"
---case when 구문 WHEN 조건1 THEN 출력1 구문
+--case when 援щЦ WHEN 議곌굔1 THEN 異쒕젰1 援щЦ
 ,CASE substr(tel,1,instr(tel,')',1)-1) WHEN '02' THEN 'SEOUL'
 									   WHEN '031' THEN 'GYEONGGI'
 									   WHEN '051' THEN 'BUSAN'
 									   WHEN '052' THEN 'ULSAN'
 									   WHEN '055' THEN 'GYEONGNAM'
-									   ELSE 'ETC'    -- ELSE = 나머지라는 뜻
-									   END "Loc2"    -- END = 마무리
+									   ELSE 'ETC'    -- ELSE = �굹癒몄��씪�뒗 �쑜
+									   END "Loc2"    -- END = 留덈Т由�
 FROM student
 WHERE deptno1 = '201';
 
@@ -25,7 +25,7 @@ SELECT name, jumin
 FROM student
 WHERE deptno1 = '101';
 
--- case 구문을 활용 조건의 범위를 지정
+-- case 援щЦ�쓣 �솢�슜 議곌굔�쓽 踰붿쐞瑜� 吏��젙
 -- 01 ~ 03 => 1/4, 04 ~ 06 => 2/4, 07 ~ 09 => 3/4, 10 ~ 12 4/4
 SELECT name, substr(jumin,3,2) AS "MONTH"
 ,CASE WHEN substr(jumin,3,2) BETWEEN '01' AND '03' THEN '1/4'
@@ -35,7 +35,7 @@ SELECT name, substr(jumin,3,2) AS "MONTH"
 	  END "QUARTER"
 FROM student;
 
---123p 퀴즈
+--123p �댁쫰
 SELECT empno,ename,sal
 ,CASE WHEN sal BETWEEN '1' AND '1000' THEN 'LEVEL 1'
 	  WHEN sal BETWEEN '1001' AND '2000' THEN 'LEVEL 2'
@@ -47,58 +47,58 @@ FROM emp
 ORDER BY sal DESC;
 
 --group
-SELECT deptno, ename, count(*) "인원" , sum(sal) "부서별 급여"
+SELECT deptno, ename, count(*) "�씤�썝" , sum(sal) "遺��꽌蹂� 湲됱뿬"
 FROM emp
-GROUP BY deptno,ename; --부서번호별 그룹
+GROUP BY deptno,ename; --遺��꽌踰덊샇蹂� 洹몃９
 
 SELECT ename, job, hiredate
 FROM emp
 ORDER BY 1;
 
---emp 테이블
-SELECT deptno,job, count(1) "건수", sum(sal + nvl(comm,0)) "직무별 급여합계"
-,round(sum(sal +nvl(comm,0))/count(1)) "직무별 평균급여"
-,round(avg(sal + nvl(comm,0))) "직무별 평균급여1"
-,min(sal + nvl(comm,0)) "최저급여"
-,max(sal + nvl(comm,0)) "최고급여"
---,stddev(sal) "표준편차"
---,variance(sal) "분산"
+--emp �뀒�씠釉�
+SELECT deptno,job, count(1) "嫄댁닔", sum(sal + nvl(comm,0)) "吏곷Т蹂� 湲됱뿬�빀怨�"
+,round(sum(sal +nvl(comm,0))/count(1)) "吏곷Т蹂� �룊洹좉툒�뿬"
+,round(avg(sal + nvl(comm,0))) "吏곷Т蹂� �룊洹좉툒�뿬1"
+,min(sal + nvl(comm,0)) "理쒖�湲됱뿬"
+,max(sal + nvl(comm,0)) "理쒓퀬湲됱뿬"
+--,stddev(sal) "�몴以��렪李�"
+--,variance(sal) "遺꾩궛"
 FROM emp
 GROUP BY deptno, job;
 
--- 직무별 그룹
+-- 吏곷Т蹂� 洹몃９
 SELECT job
 	   ,sum(sal)
-	   ,round(avg(sal + nvl(comm,0))) "직무별 평균급여"
+	   ,round(avg(sal + nvl(comm,0))) "吏곷Т蹂� �룊洹좉툒�뿬"
 FROM emp
---WHERE sal > 1500 -- where 절 조건문 
+--WHERE sal > 1500 -- where �젅 議곌굔臾� 
 GROUP BY job								
---HAVING round(avg(sal + nvl(comm,0))) > 1500;-- having 절 조건문은 구분해야한다
-UNION ALL  --위 아래 연결
-SELECT '전체'
+--HAVING round(avg(sal + nvl(comm,0))) > 1500;-- having �젅 議곌굔臾몄� 援щ텇�빐�빞�븳�떎
+UNION ALL  --�쐞 �븘�옒 �뿰寃�
+SELECT '�쟾泥�'
       ,sum(sal)
       ,round(avg(sal + nvl(comm,0)))
 FROM emp;
 
---부서/ 직무(업)/ 정보조회(평균급여, 사원수)
---1. 부서별 직무별 평균급여, 사원수
+--遺��꽌/ 吏곷Т(�뾽)/ �젙蹂댁“�쉶(�룊洹좉툒�뿬, �궗�썝�닔)
+--1. 遺��꽌蹂� 吏곷Т蹂� �룊洹좉툒�뿬, �궗�썝�닔
 SELECT deptno||'', job, avg(sal), count(1)
 FROM emp
 GROUP BY deptno, job
 UNION all
---2. 부서별 평균급여, 사원수
-SELECT deptno||'', '소계', round(avg(sal)), count(1)
+--2. 遺��꽌蹂� �룊洹좉툒�뿬, �궗�썝�닔
+SELECT deptno||'', '�냼怨�', round(avg(sal)), count(1)
 FROM emp
 GROUP BY deptno
 UNION all
---3.전체 평균급여, 사원수
-SELECT '전체','',round(avg(sal)),count(1)
+--3.�쟾泥� �룊洹좉툒�뿬, �궗�썝�닔
+SELECT '�쟾泥�','',round(avg(sal)),count(1)
 FROM emp
 order BY 1, 2;
 
--- rollup 함수
-SELECT nvl(deptno||'','전체') AS "dept"
-,decode(deptno, NULL,' ', nvl(job,'소계')) AS "job"
+-- rollup �븿�닔
+SELECT nvl(deptno||'','�쟾泥�') AS "dept"
+,decode(deptno, NULL,' ', nvl(job,'�냼怨�')) AS "job"
 ,round(avg(sal)) AS "avg_sal"
 ,count(1) AS "cnt_emp"
 --,nvl(deptno,1) AS "order_by"
@@ -106,16 +106,16 @@ FROM emp
 GROUP BY rollup(deptno,job)
 ORDER BY nvl(deptno,1),1,2;
 
---emp, dept 테이블
+--emp, dept �뀒�씠釉�
 SELECT empno,ename,e.deptno,dname,loc,d.deptno
-FROM emp e  --driving 테이블
-JOIN dept d ON e.deptno = d.deptno -- join 기준
-WHERE dname = 'ACCOUNTING'  -- ANSI 조인
+FROM emp e  --driving �뀒�씠釉�
+JOIN dept d ON e.deptno = d.deptno -- join 湲곗�
+WHERE dname = 'ACCOUNTING'  -- ANSI 議곗씤
 ;
 
---오라클만 가능한 방식(위와 같음)
+--�삤�씪�겢留� 媛��뒫�븳 諛⑹떇(�쐞�� 媛숈쓬)
 SELECT empno,ename,e.deptno,dname,loc,d.deptno
-FROM emp e  --driving 테이블
+FROM emp e  --driving �뀒�씠釉�
      ,dept d
 WHERE e.deptno = d.deptno
 AND dname = 'ACCOUNTING';
@@ -123,15 +123,15 @@ AND dname = 'ACCOUNTING';
 SELECT *
 FROM dept;
 
---학생, 교수, 학과 조인결과
---학번, 이름, 담당교수 이름, 학과명
-SELECT s.studno "학번"
-,s.name "학생이름"
-,p.name "교수이름"
-,d.dname "학과명"
+--�븰�깮, 援먯닔, �븰怨� 議곗씤寃곌낵
+--�븰踰�, �씠由�, �떞�떦援먯닔 �씠由�, �븰怨쇰챸
+SELECT s.studno "�븰踰�"
+,s.name "�븰�깮�씠由�"
+,p.name "援먯닔�씠由�"
+,d.dname "�븰怨쇰챸"
 FROM student s
-JOIN professor p ON s.profno = p.profno -- 학생 - 교수 테이블의 조인 조건
-JOIN department d ON s.deptno1 = d.deptno; --학생 - 학과 테이블 조인
+JOIN professor p ON s.profno = p.profno -- �븰�깮 - 援먯닔 �뀒�씠釉붿쓽 議곗씤 議곌굔
+JOIN department d ON s.deptno1 = d.deptno; --�븰�깮 - �븰怨� �뀒�씠釉� 議곗씤
 
 SELECT * 
 FROM professor;
@@ -139,13 +139,13 @@ FROM professor;
 SELECT *
 FROM department;
 
---등가조인(equi join)
---고객테이블()
+--�벑媛�議곗씤(equi join)
+--怨좉컼�뀒�씠釉�()
 SELECT c.*,g.gname
 FROM customer c
 JOIN gift g ON c.point BETWEEN g.g_start AND g.g_end;
 
---위와 같은 의미
+--�쐞�� 媛숈� �쓽誘�
 SELECT c.*,g.gname
 FROM customer c
 JOIN gift g ON c.point >= g.g_start AND c.point <= g.g_end;
@@ -153,12 +153,12 @@ JOIN gift g ON c.point >= g.g_start AND c.point <= g.g_end;
 SELECT * 
 FROM gift;
 
---비등가조인(Non-equi join)
---학생, 학점
-SELECT s.studno "학번"
-	   ,s.name "학생이름"
-	   ,c.total "점수"
-	   ,h.grade "학점"
+--鍮꾨벑媛�議곗씤(Non-equi join)
+--�븰�깮, �븰�젏
+SELECT s.studno "�븰踰�"
+	   ,s.name "�븰�깮�씠由�"
+	   ,c.total "�젏�닔"
+	   ,h.grade "�븰�젏"
 FROM student s
 JOIN score c ON s.studno = c.studno
 JOIN hakjum h ON c.total >= h.min_point AND h.max_point >= c.total;
@@ -169,14 +169,14 @@ FROM score;
 SELECT *
 FROM hakjum;
 
---254p 1번
---ANSI Join 문법
+--254p 1踰�
+--ANSI Join 臾몃쾿
 SELECT s.name "STU_NAME"
 ,s.deptno1 "DEPTNO1"
 ,d.dname "DEPT_NAME"
 FROM  student s
 JOIN department d ON s.deptno1 = d.deptno;
---Oracle Join 문법
+--Oracle Join 臾몃쾿
 SELECT s.name "STU_NAME"
 ,s.deptno1 "DEPTNO1"
 ,d.dname "DEPT_NAME"
@@ -187,7 +187,7 @@ WHERE s.deptno1 = d.deptno;
 SELECT *
 FROM department;
 
---254p 2번
+--254p 2踰�
 SELECT e2.name
 ,e2.position
 ,e2.pay
@@ -202,7 +202,7 @@ FROM emp2;
 SELECT *
 FROM p_grade;
 
---255p 3번
+--255p 3踰�
 SELECT name
 ,trunc(months_between(sysdate,e2.birthday)/12) "AGE"
 ,e2.POSITION "CURR_POSITION"
@@ -210,32 +210,32 @@ SELECT name
 FROM emp2 e2
 JOIN p_grade p ON  trunc(months_between(sysdate,e2.birthday)/12) BETWEEN p.s_age AND p.e_age;
 
---생일 데이터 늘리기
+--�깮�씪 �뜲�씠�꽣 �뒛由ш린
 UPDATE emp2
 SET birthday = add_months(birthday, -12)
 WHERE 1=1;
 
---outer join(아우터조인) vs inner join(이너 조인) => join만 쓰는 것
-SELECT s.studno "학번"
-,s.name "학생이름"
-,p.profno "교수이름"
-,p.name "교수이름"
+--outer join(�븘�슦�꽣議곗씤) vs inner join(�씠�꼫 議곗씤) => join留� �벐�뒗 寃�
+SELECT s.studno "�븰踰�"
+,s.name "�븰�깮�씠由�"
+,p.profno "援먯닔�씠由�"
+,p.name "援먯닔�씠由�"
 FROM student s
 full OUTER JOIN professor p ON s.profno = p.profno;
--- left outer => student(from 쪽) 테이블 기준, right outer => (join 쪽)professor 테이블 기준
--- full outer => 전체 테이블 기준
+-- left outer => student(from 履�) �뀒�씠釉� 湲곗�, right outer => (join 履�)professor �뀒�씠釉� 湲곗�
+-- full outer => �쟾泥� �뀒�씠釉� 湲곗�
 
---self join(셀프 조인) => 테이블 하나로 join하는 것
-SELECT e1.empno "사원번호"
-,e1.ename "사원이름"
-,e2.empno "관리자 번호"
-,e2.ename "관리자 이름"
+--self join(���봽 議곗씤) => �뀒�씠釉� �븯�굹濡� join�븯�뒗 寃�
+SELECT e1.empno "�궗�썝踰덊샇"
+,e1.ename "�궗�썝�씠由�"
+,e2.empno "愿�由ъ옄 踰덊샇"
+,e2.ename "愿�由ъ옄 �씠由�"
 FROM emp e1
 left OUTER JOIN emp e2 ON e1.mgr  = e2.empno;
 
 SELECT count(*) FROM emp;
 
---p255 4번
+--p255 4踰�
 SELECT *
 FROM customer;
 
@@ -244,7 +244,24 @@ FROM gift;
 
 SELECT c.gname "CUST_NAME"
 ,c.point "POINT"
-,g.gname "GIFT_NAME"
+,'Notebook' "GIFT_NAME"
 FROM customer c
-JOIN gift g ON c.point >  
+JOIN gift g ON c.point between g.g_start and g.g_end
+WHERE c.point >= 600000;
 
+--256p 5번 문제
+SELECT p1.profno, p1.name
+, case when substr(p1.hiredate,1,2) between '27' and '99' then '19'||p1.hiredate
+else '20'||p1.hiredate
+end hiredate
+,count(1)
+from professor p1
+left outer join professor p2 on p1.name = p2.name
+order by p1.hiredate;
+--count 추가를 어떻게 하는지 모르겠네
+
+--257p 6번
+SELECT e1.empno,e1.ename, e1.hiredate
+from emp e1
+join emp e2 on e1.ename = e2.ename
+order by e1.hiredate;
