@@ -254,14 +254,25 @@ SELECT p1.profno, p1.name
 , case when substr(p1.hiredate,1,2) between '27' and '99' then '19'||p1.hiredate
 else '20'||p1.hiredate
 end hiredate
-,count(1)
+,count(p2.profno)
+--,count(1)
 from professor p1
-left outer join professor p2 on p1.name = p2.name
+left outer join professor p2 on p1.hiredate > p2.hiredate
+GROUP BY p1.profno,p1.name,p1.hiredate
 order by p1.hiredate;
---count 추가를 어떻게 하는지 모르겠네
+--count 추가를 어떻게 하는지 모르겠네 => 해답 2번기준으로 하면된다 그룹잡고
 
 --257p 6번
-SELECT e1.empno,e1.ename, e1.hiredate
+--ANSI join
+SELECT e1.empno,e1.ename, e1.hiredate,count(e2.empno) "count"
+--,e2.empno,e2.ename,e2.hiredate
 from emp e1
-join emp e2 on e1.ename = e2.ename
+LEFT OUTER join emp e2 on e1.hiredate > e2.hiredate
+GROUP BY e1.empno,e1.ename, e1.hiredate
 order by e1.hiredate;
+--oracle join
+SELECT e1.empno,e1.ename,e1.hiredate,count(e2.empno) "count"
+FROM emp e1, emp e2
+WHERE e1.hiredate > e2.hiredate(+)  --(+)가 아우터 조인
+GROUP BY e1.empno,e1.ename,e1.hiredate
+ORDER BY 4;
