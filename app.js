@@ -41,3 +41,6 @@ app.get("/employee/:empno", async (req, res) => {
 app.listen(3000, () => {
   console.log("server 실행. http://localhost:3000");
 });
+
+//집가서 node.js를 윈도우버전으로 다운로드
+//d:dev:fun_sql폴더로 cmd를 통해 들어가 npm install을 하면 오늘 배울때 install받은 파일들을 다운받을수 있다.
