@@ -8,7 +8,21 @@ const app = express(); //인스턴스 생성
 app.get("/", (req, res) => {
   res.send("/ 안형주 홈에 오신걸 환영합니다.");
 });
+app.get("/add_board", async (req, res) => {
+  const qry = `insert into board(board_no,title,content,writer)
+               values(6,'test','content','user01')`;
+  try {
+    const connection = await db.getConnection();
+    const result = await connection.execute(qry);
+    res.send("처리완료");
+  } catch (err) {
+    console.log(err);
+    res.send("에러");
+  }
+});
+
 // "/customer"
+/*
 app.get("/customer", (req, res) => {
   res.send("/customer 경로가 호출됨.");
 });
@@ -16,7 +30,7 @@ app.get("/customer", (req, res) => {
 app.get("/product", (req, res) => {
   res.send("/product 경로가 호출됨.");
 });
-
+*/
 // "/student" -> 화면에 출력
 app.get("/student/:studno", async (req, res) => {
   console.log(req.params.studno);
@@ -41,3 +55,6 @@ app.get("/employee/:empno", async (req, res) => {
 app.listen(3000, () => {
   console.log("server 실행. http://localhost:3000");
 });
+
+//집가서 node.js를 윈도우버전으로 다운로드
+//d:dev:fun_sql폴더로 cmd를 통해 들어가 npm install을 하면 오늘 배울때 install받은 파일들을 다운받을수 있다.

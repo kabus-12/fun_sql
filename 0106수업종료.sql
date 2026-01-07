@@ -10,7 +10,7 @@ CREATE TABLE board(
 	,write_date DATE DEFAULT sysdate --작성시간
 );
 --새로운 컬럼 추가
-ALTER TABLE board ADD (click_cnt number);
+ALTER TABLE board ADD (click_cnt NUMBER(30));
 --컬럼명 변경
 ALTER TABLE board RENAME COLUMN click_cnt TO view_cnt;
 --컬럼 타입 변경
