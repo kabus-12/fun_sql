@@ -3,21 +3,72 @@ const express = require("express"); //모듈 임포트
 const db = require("./db");
 const app = express(); //인스턴스 생성
 
+app.use(express.static("public"));
+app.use(express.json());
+
 // URL주소 - 실행함수 => 라우팅
 // "/"
 app.get("/", (req, res) => {
   res.send("/ 안형주 홈에 오신걸 환영합니다.");
 });
-app.get("/add_board", async (req, res) => {
-  const qry = `insert into board(board_no,title,content,writer)
-               values(6,'test','content','user01')`;
+//댓글 삭제
+//요청방식(get)- '/remove_board/:borad_no'
+//반환되는 결과({retCode:'ok' or 'NG' })
+app.get("/remove_boards/:borad_no", async (req, res) => {
+  const borad_no = req.params.borad_no;
+  const qry = `delete from board where board_no = ${borad_no}`;
   try {
     const connection = await db.getConnection();
     const result = await connection.execute(qry);
-    res.send("처리완료");
+    connection.commit();
+    console.log(result);
+    res.json({ retCode: "OK", retMsg: "ok" });
   } catch (err) {
     console.log(err);
-    res.send("에러");
+    res.json({ retCode: "NG", retMsg: "DB에러" });
+  }
+});
+
+//댓글 전체 목록을 반환
+app.get("/boards", async (req, res) => {
+  const qry = "select * from board order by 1";
+  try {
+    const connection = await db.getConnection();
+    const result = await connection.execute(qry);
+    console.log(result);
+    res.send(result.rows);
+  } catch (err) {
+    console.log(err);
+    res.send("실패"); //웹브라우저에 결과 전송
+  }
+});
+
+// 요청방식 get vs post
+// get : 단순조회.
+//post : 많은 양의 전달
+app.post("/add_board", async (req, res) => {
+  console.log(req.body);
+  //{board_no:10,title:'test',content:'sample',writer:'user01'}
+  const { board_no, title, content, writer } = req.body;
+
+  const qry = `insert into board(board_no,title,content,writer)
+               values(:board_no, :title, :content,:writer)`;
+  try {
+    const connection = await db.getConnection();
+    const result = await connection.execute(qry, [
+      board_no,
+      title,
+      content,
+      writer,
+    ]);
+    console.log(result);
+    connection.commit();
+    //res.send("처리완료"); //서버 ->클라이언트
+    res.json({ board_no, title, content, writer });
+  } catch (err) {
+    console.log(err);
+    //res.send("에러");
+    res.json({ retCode: "NG", retMsg: "DB에러" });
   }
 });
 
