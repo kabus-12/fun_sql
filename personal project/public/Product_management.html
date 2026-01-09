@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>상품 관리</title>
+    <link rel="stylesheet" href="Product_management.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h2>상품 목록</h2>
+        <div class="top-bar">
+          <div class="search-box">
+            <input type="text" placeholder="상품 검색" />
+          </div>
+
+          <div class="right-controls">
+            <!-- 카테고리 드롭다운 (폼 형태) -->
+            <select class="category-select">
+              <option>전체</option>
+              <option>육류</option>
+              <option>해산물</option>
+              <option>과자</option>
+              <option>과일</option>
+              <option>채소</option>
+              <option>생필품</option>
+              <option>음료</option>
+            </select>
+            <div class="modal-overlay"></div>
+            <div class="modal">
+              <h2>상품 추가</h2>
+              <form class="addition" action="#" method="post">
+                <label for="num">상품번호</label>
+                <input type="number" id="num" name="num" requir />
+
+                <label for="name">상품명</label>
+                <input type="text" id="name" name="name" required />
+
+                <label for="category">카테고리</label>
+                <input type="text" id="category" name="Category" required />
+
+                <label for="price">가격</label>
+                <input type="number" id="price" name="price" required />
+
+                <label for="barcode">바코드</label>
+                <input type="number" id="barcode" name="barcode" required />
+
+                <label for="stock">재고</label>
+                <input type="number" id="stock" name="stock" required />
+
+                <button type="submit" class="submit">등록</button>
+                <button onclick="main()" type="button" class="cancel">
+                  나가기
+                </button>
+              </form>
+            </div>
+            <div class="modal-overlay2"></div>
+            <div class="modal2">
+              <h2>상품 수정</h2>
+              <form class="retouch" action="#" method="post">
+                <label for="num">상품번호</label>
+                <input type="number" id="num" name="num" requir />
+
+                <label for="name">상품명</label>
+                <input type="text" id="name" name="name" required />
+
+                <label for="category">카테고리</label>
+                <input type="text" id="category" name="Category" required />
+
+                <label for="price">가격</label>
+                <input type="number" id="price" name="price" required />
+
+                <label for="barcode">바코드</label>
+                <input type="number" id="barcode" name="barcode" required />
+
+                <label for="stock">재고</label>
+                <input type="number" id="stock" name="stock" required />
+
+                <button type="submit" class="retouch">수정</button>
+                <button onclick="main()" type="button" class="cancel">
+                  나가기
+                </button>
+              </form>
+            </div>
+            <button onclick="addition()" class="btn btn-primary">
+              상품 추가
+            </button>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>상품번호</th>
+              <th>상품명</th>
+              <th>카테고리</th>
+              <th>가격</th>
+              <th>바코드</th>
+              <th>재고</th>
+              <th>관리</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <script src="js/Product_Management.js"></script>
+  </body>
+</html>
