@@ -111,6 +111,10 @@ button {
 button:hover {
   background-color: #45a049;
 }
+.search{
+  width: 50px;
+  float: none;
+}
 /* 테이블 */
 table {
   width: 100%;
