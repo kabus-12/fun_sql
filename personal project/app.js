@@ -19,26 +19,32 @@ app.get("/goods", async (req, res) => {
   }
 });
 
-app.get("/retouch_goods", async (req, res) => {
-  console.log(req.body);
+//수정
+app.post("/retouch_goods", async (req, res) => {
   const { num, name, category, price, barcode, stock } = req.body;
-  const qry =
-    "update goods set num=:num,name=:name,category=:category,price=:price,barcode=:barcode,stock=:stock";
+  console.log(num, name, category, price, barcode, stock);
+  const qry = `
+    UPDATE goods 
+    SET name=:name, category=:category, price=:price, barcode=:barcode, stock=:stock
+    WHERE num=:num
+  `;
+
   try {
     const connection = await db.getConnection();
-    const result = await connection.execute(qry, [
+    const result = await connection.execute(qry, {
       num,
       name,
       category,
       price,
       barcode,
       stock,
-    ]);
-    console.log(result);
-    res.send(result.rows);
+    });
+    await connection.commit();
+
+    res.json({ success: true });
   } catch (err) {
     console.log(err);
-    res.send("실패");
+    res.json({ success: false, error: err.message });
   }
 });
 
@@ -62,6 +68,23 @@ app.post("/add_goods", async (req, res) => {
     console.log(result);
     connection.commit();
     res.json({ num, name, category, price, barcode, stock });
+  } catch (err) {
+    console.log(err);
+    res.json({ retCode: "NG", retMsg: "에러" });
+  }
+});
+//상품 삭제
+app.post("/delete_goods", async (req, res) => {
+  const { num } = req.body;
+
+  const qry = `delete from goods
+              where num = :num`;
+  try {
+    const connection = await db.getConnection();
+    const result = await connection.execute(qry, [num]);
+    console.log(result);
+    connection.commit();
+    res.json({ num });
   } catch (err) {
     console.log(err);
     res.json({ retCode: "NG", retMsg: "에러" });

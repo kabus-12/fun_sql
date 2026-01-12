@@ -11,13 +11,13 @@
         <h2>상품 목록</h2>
         <div class="top-bar">
           <div class="search-box">
-            <input type="text" placeholder="상품 검색" />
-            <button type = "button" class = "search">검색</button>
+            <input type="text" id="search" placeholder="상품 검색" />
+            <button type="button" id="searchbtn" class="search">검색</button>
           </div>
 
           <div class="right-controls">
             <!-- 카테고리 드롭다운 (폼 형태) -->
-            <select class="category-select">
+            <select id="ctgr" class="category-select">
               <option>전체</option>
               <option>육류</option>
               <option>해산물</option>
@@ -38,7 +38,15 @@
                 <input type="text" id="name" name="name" required />
 
                 <label for="category">카테고리</label>
-                <input type="text" id="category" name="Category" required />
+                <select id="category">
+                  <option>육류</option>
+                  <option>해산물</option>
+                  <option>과자</option>
+                  <option>과일</option>
+                  <option>채소</option>
+                  <option>생필품</option>
+                  <option>음료</option>
+                </select>
 
                 <label for="price">가격</label>
                 <input type="number" id="price" name="price" required />
@@ -60,22 +68,30 @@
               <h2>상품 수정</h2>
               <form class="retouch" action="#" method="post">
                 <label for="num">상품번호</label>
-                <input type="number" id="num" name="num" requir />
+                <input type="number" id="num2" name="num" requir />
 
                 <label for="name">상품명</label>
-                <input type="text" id="name" name="name" required />
+                <input type="text" id="name2" name="name" required />
 
                 <label for="category">카테고리</label>
-                <input type="text" id="category" name="Category" required />
+                <select id="category2">
+                  <option>육류</option>
+                  <option>해산물</option>
+                  <option>과자</option>
+                  <option>과일</option>
+                  <option>채소</option>
+                  <option>생필품</option>
+                  <option>음료</option>
+                </select>
 
                 <label for="price">가격</label>
-                <input type="number" id="price" name="price" required />
+                <input type="number" id="price2" name="price" required />
 
                 <label for="barcode">바코드</label>
-                <input type="number" id="barcode" name="barcode" required />
+                <input type="number" id="barcode2" name="barcode" required />
 
                 <label for="stock">재고</label>
-                <input type="number" id="stock" name="stock" required />
+                <input type="number" id="stock2" name="stock" required />
 
                 <button type="submit" class="retouch">수정</button>
                 <button onclick="main()" type="button" class="cancel">
@@ -88,7 +104,7 @@
             </button>
           </div>
         </div>
-        <table>
+        <table id="table">
           <thead>
             <tr>
               <th>상품번호</th>
@@ -100,7 +116,7 @@
               <th>관리</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody id="aaa"></tbody>
         </table>
       </div>
     </div>
