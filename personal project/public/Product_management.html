@@ -6,12 +6,11 @@
     <link rel="stylesheet" href="Product_management.css" />
   </head>
   <body>
-    <div class="container">
       <div class="card">
         <h2>상품 목록</h2>
         <div class="top-bar">
           <div class="search-box">
-            <input type="text" id="search" placeholder="상품 검색" />
+            <input type="text" id="search" placeholder="상품명 검색" />
             <button type="button" id="searchbtn" class="search">검색</button>
           </div>
 
@@ -30,6 +29,8 @@
             <div class="modal-overlay"></div>
             <div class="modal">
               <h2>상품 추가</h2>
+              <label for="barcode">바코드</label>
+              <input type="number" id="barcode" name="barcode" required/>
               <form class="addition" action="#" method="post">
                 <label for="num">상품번호</label>
                 <input type="number" id="num" name="num" requir />
@@ -51,8 +52,6 @@
                 <label for="price">가격</label>
                 <input type="number" id="price" name="price" required />
 
-                <label for="barcode">바코드</label>
-                <input type="number" id="barcode" name="barcode" required />
 
                 <label for="stock">재고</label>
                 <input type="number" id="stock" name="stock" required />
@@ -67,6 +66,8 @@
             <div class="modal2">
               <h2>상품 수정</h2>
               <form class="retouch" action="#" method="post">
+                <label for="barcode">바코드</label>
+                <input type="number" id="barcode2" name="barcode" required />
                 <label for="num">상품번호</label>
                 <input type="number" id="num2" name="num" requir />
 
@@ -87,8 +88,6 @@
                 <label for="price">가격</label>
                 <input type="number" id="price2" name="price" required />
 
-                <label for="barcode">바코드</label>
-                <input type="number" id="barcode2" name="barcode" required />
 
                 <label for="stock">재고</label>
                 <input type="number" id="stock2" name="stock" required />

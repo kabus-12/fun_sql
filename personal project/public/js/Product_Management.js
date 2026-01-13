@@ -61,7 +61,7 @@ document.querySelector("form.addition").addEventListener("submit", (e) => {
   const stock = document.querySelector("#stock").value;
 
   if (!num || !name || !category || !price || !barcode || !stock) {
-    alert("필수값 입력");
+    alert("값을 입력해주세요");
     return;
   }
 
@@ -93,6 +93,12 @@ document.querySelector("form.addition").addEventListener("submit", (e) => {
             </tr>`;
       const subject = document.querySelector("tbody");
       subject.insertAdjacentHTML("beforeend", insertHtml);
+      alert("등록이 완료되었습니다");
+      document.querySelector("#num").value = "";
+      document.querySelector("#name").value = "";
+      document.querySelector("#price").value = "";
+      document.querySelector("#barcode").value = "";
+      document.querySelector("#stock").value = "";
     })
     .catch((err) => {
       console.log(err);
@@ -165,9 +171,9 @@ document.querySelector("form.retouch").addEventListener("submit", (e) => {
     .then((result) => {
       console.log(result);
       if (result.success) {
-        alert("수정 완료");
         modal.style.display = "none";
         overlay.style.display = "none";
+        alert("수정이 완료되었습니다.");
         location.reload();
         console.log(result);
       }
@@ -207,6 +213,7 @@ function deleteRow(button) {
   })
     .then((res) => res.json())
     .then((result) => {
+      alert("삭제가 완료되었습니다.");
       location.reload();
     });
 }

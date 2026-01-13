@@ -1,9 +1,14 @@
 const express = require("express");
 const db = require("./db");
 const app = express();
+const path = require("path");
 
 app.use(express.static("public"));
 app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "Product_management.html"));
+});
 
 //화면 출력
 app.get("/goods", async (req, res) => {
@@ -91,6 +96,6 @@ app.post("/delete_goods", async (req, res) => {
   }
 });
 
-app.listen(4000, () => {
-  console.log("server 실행. http://localhost:4000");
+app.listen(3000, () => {
+  console.log("server 실행. http://localhost:3000");
 });
